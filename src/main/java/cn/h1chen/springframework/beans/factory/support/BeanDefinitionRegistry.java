@@ -10,4 +10,11 @@ import cn.h1chen.springframework.beans.factory.config.BeanDefinition;
 public interface BeanDefinitionRegistry {
 
     void registerBeanDefinition(String beanName, BeanDefinition beanDefinition);
+
+    BeanDefinition getBeanDefinition(String beanName);
+
+    boolean containBeanDefinition(String beanName);
+
+    String[] getBeanDefinitionNames();
+
 }

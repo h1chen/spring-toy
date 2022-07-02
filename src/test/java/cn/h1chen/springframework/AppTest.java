@@ -7,6 +7,7 @@ import cn.h1chen.springframework.beans.PropertyValues;
 import cn.h1chen.springframework.beans.factory.config.BeanDefinition;
 import cn.h1chen.springframework.beans.factory.config.BeanReference;
 import cn.h1chen.springframework.beans.factory.support.DefaultListableBeanFactory;
+import cn.h1chen.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.junit.Test;
 
 /**
@@ -30,6 +31,17 @@ public class AppTest {
         // 4. UserService 注入bean
         BeanDefinition beanDefinition = new BeanDefinition(UserService.class, propertyValues);
         beanFactory.registerBeanDefinition("userService", beanDefinition);
+
+        UserService userService = (UserService) beanFactory.getBean("userService", "h1chen");
+        userService.queryUserInfo();
+    }
+
+    @Test
+    public void test_beanDefinitionReader() {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+        beanDefinitionReader.loadBeanDefinitions("classpath:spring.xml");
 
         UserService userService = (UserService) beanFactory.getBean("userService", "h1chen");
         userService.queryUserInfo();
