@@ -8,6 +8,7 @@ import cn.h1chen.springframework.beans.factory.config.BeanDefinition;
 import cn.h1chen.springframework.beans.factory.config.BeanReference;
 import cn.h1chen.springframework.beans.factory.support.DefaultListableBeanFactory;
 import cn.h1chen.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import cn.h1chen.springframework.context.support.ClassPathXmlApplicationContext;
 import org.junit.Test;
 
 /**
@@ -44,6 +45,16 @@ public class AppTest {
         beanDefinitionReader.loadBeanDefinitions("classpath:spring.xml");
 
         UserService userService = (UserService) beanFactory.getBean("userService", "h1chen");
+        userService.queryUserInfo();
+    }
+
+    @Test
+    public void test_applicationContext() {
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+
+        // 2. 获取Bean对象调用方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
         userService.queryUserInfo();
     }
 }
