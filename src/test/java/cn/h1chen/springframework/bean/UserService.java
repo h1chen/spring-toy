@@ -1,9 +1,12 @@
 package cn.h1chen.springframework.bean;
 
+import cn.h1chen.springframework.beans.factory.DisposableBean;
+import cn.h1chen.springframework.beans.factory.InitializingBean;
+
 /**
  * @author h1chen
  */
-public class UserService {
+public class UserService implements InitializingBean, DisposableBean {
     private String name;
     private UserDao userDao;
     private String userId;
@@ -16,6 +19,16 @@ public class UserService {
 
 
     public UserService() {
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("执行：UserService.destroy");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("执行：UserService.afterPropertiesSet");
     }
 
     public String getLocation() {

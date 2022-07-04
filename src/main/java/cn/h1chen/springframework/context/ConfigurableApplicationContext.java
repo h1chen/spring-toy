@@ -12,4 +12,13 @@ public interface ConfigurableApplicationContext extends ApplicationContext {
      */
     void refresh() throws BeansException;
 
+    /**
+     * 注册关机钩子方法
+     */
+    void registerShutdownHook();
+
+    /**
+     * 手动关闭
+     */
+    void close();
 }
