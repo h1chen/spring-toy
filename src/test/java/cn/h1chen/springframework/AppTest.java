@@ -9,6 +9,7 @@ import cn.h1chen.springframework.beans.factory.config.BeanReference;
 import cn.h1chen.springframework.beans.factory.support.DefaultListableBeanFactory;
 import cn.h1chen.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import cn.h1chen.springframework.context.support.ClassPathXmlApplicationContext;
+import cn.h1chen.springframework.event.CustomEvent;
 import org.junit.Test;
 
 /**
@@ -87,5 +88,12 @@ public class AppTest {
         System.out.println(userService02);
     }
 
+    @Test
+    public void test_event() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-event.xml");
+        applicationContext.publishEvent(new CustomEvent(applicationContext, 1019129009086763L, "成功了！"));
+
+        applicationContext.registerShutdownHook();
+    }
 
 }
