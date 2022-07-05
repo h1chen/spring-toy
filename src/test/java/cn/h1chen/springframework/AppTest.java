@@ -71,6 +71,21 @@ public class AppTest {
 
         System.out.println("ApplicationContextAware：" + userService.getApplicationContext());
         System.out.println("BeanFactoryAware：" + userService.getBeanFactory());
-
     }
+
+    @Test
+    public void test_prototype_and_factoryBean() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+
+        UserService userService01 = applicationContext.getBean("userService", UserService.class);
+        UserService userService02 = applicationContext.getBean("userService", UserService.class);
+
+        userService01.queryUserInfo();
+
+        System.out.println(userService01);
+        System.out.println(userService02);
+    }
+
+
 }

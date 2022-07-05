@@ -82,7 +82,7 @@ public class UserService implements InitializingBean, DisposableBean, BeanClassL
 
     @Override
     public void setBeanClassLoader(ClassLoader classLoader) {
-        System.out.println("ClassLoader：" + classLoader);
+//        System.out.println("ClassLoader：" + classLoader);
     }
 
     public ApplicationContext getApplicationContext() {

@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-    <bean id="userDao" class="cn.h1chen.springframework.bean.UserDao" init-method="initDataMethod"
-          destroy-method="destroyDataMethod"/>
+    <!--    <bean id="userDao" class="cn.h1chen.springframework.bean.UserDao" init-method="initDataMethod"-->
+    <!--          destroy-method="destroyDataMethod"/>-->
 
-    <bean id="userService" class="cn.h1chen.springframework.bean.UserService">
+    <!--    <bean id="userService" class="cn.h1chen.springframework.bean.UserService" scope = "prototype">-->
+    <!--        <property name="userId" value="10001"/>-->
+    <!--        <property name="userDao" ref="userDao"/>-->
+    <!--        <property name="company" value="腾讯"/>-->
+    <!--        <property name="location" value="深圳"/>-->
+    <!--    </bean>-->
+
+    <!--    <bean class="cn.h1chen.springframework.common.MyBeanPostProcessor"/>-->
+    <!--    <bean class="cn.h1chen.springframework.common.MyBeanFactoryPostProcessor"/>-->
+
+    <bean id="userService" class="cn.h1chen.springframework.bean.UserService" scope="prototype">
         <property name="userId" value="10001"/>
-        <property name="userDao" ref="userDao"/>
+        <property name="userDao" ref="proxyUserDao"/>
         <property name="company" value="腾讯"/>
         <property name="location" value="深圳"/>
     </bean>
 
-    <bean class="cn.h1chen.springframework.common.MyBeanPostProcessor"/>
-    <bean class="cn.h1chen.springframework.common.MyBeanFactoryPostProcessor"/>
-
+    <bean id="proxyUserDao" class="cn.h1chen.springframework.bean.ProxyBeanFactory"/>
 
 </beans>
