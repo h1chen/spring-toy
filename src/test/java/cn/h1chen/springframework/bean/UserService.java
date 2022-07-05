@@ -1,17 +1,22 @@
 package cn.h1chen.springframework.bean;
 
-import cn.h1chen.springframework.beans.factory.DisposableBean;
-import cn.h1chen.springframework.beans.factory.InitializingBean;
+import cn.h1chen.springframework.beans.BeansException;
+import cn.h1chen.springframework.beans.factory.*;
+import cn.h1chen.springframework.context.ApplicationContext;
 
 /**
  * @author h1chen
  */
-public class UserService implements InitializingBean, DisposableBean {
+public class UserService implements InitializingBean, DisposableBean, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware {
     private String name;
     private UserDao userDao;
     private String userId;
     private String company;
     private String location;
+
+    private ApplicationContext applicationContext;
+    private BeanFactory beanFactory;
+
 
     public void queryUserInfo() {
         System.out.println("查询用户信息：" + userDao.queryUserName(userId) + "," + company + "," + location);
@@ -73,5 +78,28 @@ public class UserService implements InitializingBean, DisposableBean {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        System.out.println("ClassLoader：" + classLoader);
+    }
+
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
     }
 }
