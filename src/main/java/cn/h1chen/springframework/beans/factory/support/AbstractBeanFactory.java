@@ -35,7 +35,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     protected <T> T doGetBean(final String name, final Object[] args) {
         Object ShareInstance = getSingleton(name);
         if (ShareInstance != null) {
-            return (T) ShareInstance;
+            // 如果是 FactoryBean，则需要调用 FactoryBean#getObject
+            return (T) getObjectForBeanInstance(ShareInstance, name);
         }
 
         BeanDefinition beanDefinition = getBeanDefinition(name);

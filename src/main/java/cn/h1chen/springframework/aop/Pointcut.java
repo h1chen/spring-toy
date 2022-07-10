@@ -5,7 +5,7 @@ package cn.h1chen.springframework.aop;
  *
  * @author h1chen
  */
-public interface PointCut {
+public interface Pointcut {
 
     ClassFilter getClassFilter();
 

@@ -120,4 +120,10 @@ public class AppTest {
         // 测试调用
         System.out.println("测试结果：" + proxy_cglib.register("花花"));
     }
+
+    @Test
+    public void test_aop() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-aop.xml");
+        System.out.println("测试结果：" + applicationContext.getBean("userService1", UserService1.class));
+    }
 }
