@@ -1,7 +1,11 @@
 package cn.h1chen.springframework;
 
-import cn.h1chen.springframework.bean.UserDao;
-import cn.h1chen.springframework.bean.UserService;
+import cn.h1chen.springframework.aop.TargetSource;
+import cn.h1chen.springframework.aop.aspectj.AspectJExpressionPointcut;
+import cn.h1chen.springframework.aop.framework.AdvisedSupport;
+import cn.h1chen.springframework.aop.framework.Cglib2AopProxy;
+import cn.h1chen.springframework.aop.framework.JDKDynamicAopProxy;
+import cn.h1chen.springframework.bean.*;
 import cn.h1chen.springframework.beans.PropertyValue;
 import cn.h1chen.springframework.beans.PropertyValues;
 import cn.h1chen.springframework.beans.factory.config.BeanDefinition;
@@ -96,4 +100,24 @@ public class AppTest {
         applicationContext.registerShutdownHook();
     }
 
+    @Test
+    public void test_dynamic() {
+        // 目标对象
+        IUserService userService = new UserService1();
+        // 组装代理信息
+        AdvisedSupport advisedSupport = new AdvisedSupport();
+        advisedSupport.setTargetSource(new TargetSource(userService));
+        advisedSupport.setMethodInterceptor(new UserServiceInterceptor());
+        advisedSupport.setMethodMatcher(new AspectJExpressionPointcut("execution(* cn.h1chen.springframework.bean.IUserService.*(..))"));
+
+        // 代理对象(JdkDynamicAopProxy)
+        IUserService proxy_jdk = (IUserService) new JDKDynamicAopProxy(advisedSupport).getProxy();
+        // 测试调用
+        System.out.println("测试结果：" + proxy_jdk.queryUserInfo());
+
+        // 代理对象(Cglib2AopProxy)
+        IUserService proxy_cglib = (IUserService) new Cglib2AopProxy(advisedSupport).getProxy();
+        // 测试调用
+        System.out.println("测试结果：" + proxy_cglib.register("花花"));
+    }
 }
